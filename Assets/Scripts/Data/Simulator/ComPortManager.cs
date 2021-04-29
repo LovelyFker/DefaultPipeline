@@ -48,18 +48,14 @@ public class ComPortManager : MonoBehaviour
             mInstance = this;
     }
 
-    void Start()
+    public void Init()
     {
+        //初始化打开串口
         OpenPort();
         dataReceiveThread = new Thread(new ThreadStart(DataReceiveFunction));
         dataReceiveThread.Start();
         //dataSendThread = new Thread(new ThreadStart(DataSendFunction));
         //dataSendThread.Start();
-    }
-
-    void Update()
-    {
-
     }
 
     #region 创建串口，并打开串口

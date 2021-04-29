@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class GameSettings
 {
+    /// <summary>
+    /// 模拟器数据传输方式
+    /// </summary>
+    public static readonly string DataType = "DataType";
     public static readonly string SceneName = "SceneName";
     public static readonly string BGMVolume = "BGMVolume";
     public static readonly string SFXVolume = "SFXVolume";

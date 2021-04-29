@@ -38,6 +38,9 @@ public class DataShowTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ApplicationManager.Instance.mDataType != SimulatorDataType.Com)
+            return;
+
         comInputData = ComPortManager.Instance.dataFromSimulator.ComInput;
         mText.text = "";
         FieldInfo[] _fieldInfos = typeof(DataFromSimulator.ComInputData).GetFields();

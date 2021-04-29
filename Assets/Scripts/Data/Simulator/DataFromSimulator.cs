@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// 模拟器种类，对应不同的数据传输方式
 /// </summary>
-public enum SimulatorType
+public enum SimulatorDataType
 {
     Udp,
     Com,

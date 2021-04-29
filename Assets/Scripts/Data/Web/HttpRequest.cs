@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-class HttpRequest
+public class HttpRequest
 {
     /// <summary>
     /// Get请求

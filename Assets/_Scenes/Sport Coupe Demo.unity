@@ -1013,6 +1013,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130676282}
   m_CullTransparentMesh: 0
+--- !u!1 &138913119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138913121}
+  - component: {fileID: 138913120}
+  m_Layer: 0
+  m_Name: ApplicationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &138913120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138913119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4d0f968b9753a458a7588aeb5b10df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mDataType: 1
+--- !u!4 &138913121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138913119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &151422427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,102 +2582,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383698850}
   m_CullTransparentMesh: 0
---- !u!1 &424923094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 424923095}
-  - component: {fileID: 424923096}
-  m_Layer: 0
-  m_Name: ComPortManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &424923095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424923094}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98.08453, y: 0.65272903, z: 20.82002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &424923096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424923094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b88c94f144fcdd4999168e8649f82a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portName: COM1
-  baudRate: 19200
-  parity: 0
-  dataBits: 8
-  stopBits: 1
-  listReceive: 
-  dataFromSimulator:
-    ComInput:
-      Fire: 0
-      Power: 0
-      Horn: 0
-      Wiper: 0
-      TurnLight: 0
-      SeatBelt: 0
-      CarDoor: 0
-      LowBeam: 0
-      HighBeam: 0
-      Gear: 0
-      SteeringWheel: 0
-      Brake: 0
-      Clutch: 0
-      Accelerator: 0
-      HandBrake: 0
-    IsHighBeam: 0
-    IsBackOff: 0
-  dataToSimulator:
-    ComOutPut:
-      Speed: 0
-      Mileage: 0
-      Temperature: 0
-      RotateSpeed: 0
-      Oil: 0
-      BackLight: 0
-      Brightness: 0
-      Hours: 0
-      Minutes: 0
-      PilotLight: 0
-      HandBrake: 0
-      Accelerator: 0
-      Power: 0
-      LeftTurnLight: 0
-      EPC: 0
-      ABS: 0
-      EngineOil: 0
-      AirBag: 0
-      Wiper: 0
-      RightTurnLight: 0
-      BackFogLight: 0
-      FrontFogLight: 0
-      Engine: 0
-      HighBeam: 0
-      LowBeam: 0
-      SeatBelt: 0
 --- !u!1 &433915398
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,7 +2611,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &433915400
 MonoBehaviour:
