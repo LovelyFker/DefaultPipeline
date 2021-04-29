@@ -101,7 +101,7 @@ public class ExcelToJsonTool : EditorWindow
                         for (int z = 4; z <= rowCount; z++)
                         {
                             Assembly ab = Assembly.Load("Assembly-CSharp"); //要注意对面在那个程序集里面dll
-                            Type type = ab.GetType($"Entity.{sheet.Name}");
+                            Type type = ab.GetType($"Table.{sheet.Name}");
                             if (type == null)
                             {
                                 Debug.LogError("你还没有创建对应的实体类!");
