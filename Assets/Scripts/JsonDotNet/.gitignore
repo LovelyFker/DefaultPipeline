@@ -1,0 +1,14 @@
+obj/
+obj.meta
+bin/
+bin.meta
+.vs/
+*.suo
+*.suo.meta
+*.user
+*.user.meta
+~$*
+*.sdf
+*.sdf.meta
+*.opensdf
+*.opensdf.meta
