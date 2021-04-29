@@ -18,6 +18,7 @@ public enum SimulatorDataType
 [Serializable]
 public class DataFromSimulator
 {
+    #region 串口模拟器
     [Serializable]
     public struct ComInputData
     {
@@ -428,4 +429,5 @@ public class DataFromSimulator
         if (x > max) x = max;
         return x;
     }
+    #endregion
 }
