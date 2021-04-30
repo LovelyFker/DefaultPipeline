@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ApplicationManager : MonoBehaviour
 {
@@ -18,13 +19,21 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
+    public SimulatorDataType mDataType = SimulatorDataType.Com;
+    public Transform gControllerObj;
+
+    private List<SimulatorControllerBase> mControllers = new List<SimulatorControllerBase>();
+
     private void Awake()
     {
         if (mInstance == null)
             mInstance = this;
+
+        foreach (SimulatorControllerBase controller in gControllerObj.GetComponents<SimulatorControllerBase>())
+            mControllers.Add(controller);
     }
 
-    public SimulatorDataType mDataType = SimulatorDataType.Com;
+    
 
     private void Start()
     {
@@ -34,18 +43,20 @@ public class ApplicationManager : MonoBehaviour
             PlayerPrefs.SetInt(GameSettings.DataType, (int)SimulatorDataType.Com);
 
         //测试
-        //mDataType = SimulatorDataType.Udp;
+        mDataType = SimulatorDataType.Joystick;
 
         switch(mDataType)
         {
             case SimulatorDataType.Com:
                 ComPortManager.Instance.Init();
+                mControllers.Where(i => i.GetType() == typeof(ComPortController)).FirstOrDefault().enabled = true;
                 break;
             case SimulatorDataType.Bluetooth:
                 Debug.Log("蓝牙传输");
                 break;
-            case SimulatorDataType.KeyCode:
-                Debug.Log("手柄&模拟键盘按键");
+            case SimulatorDataType.Joystick:
+                JoystickManager.Instance.Init();
+                mControllers.Where(i => i.GetType() == typeof(JoystickController)).FirstOrDefault().enabled = true;
                 break;
             case SimulatorDataType.Udp:
                 Debug.Log("SocketUdp协议");
@@ -54,11 +65,5 @@ public class ApplicationManager : MonoBehaviour
                 Debug.Log("Default");
                 break;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,70 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using fsm;
 using VehiclePhysics;
-using System.Windows.Forms;
 
-public class SimulatorController : MonoBehaviour
+public class ComPortController : SimulatorControllerBase
 {
-    public class States
-    {
-        public IState Stop;
-        public IState PowerOn;
-    }
-    public StateMachine Logic = new StateMachine();
-    public States State = new States();
-
     //测试车辆本体
     public VehicleBase vehicle;
-
-    /// <summary>
-    /// 判断是否忽略输入
-    /// </summary>
-    public bool IgnoreInput = false;
 
     /// <summary>
     /// VP插件输入管理
     /// </summary>
     public VPStandardInput vpStandardInput;
 
-    private void Awake()
-    {
-        this.State.Stop = new State
-        {
-            OnEnterEvent = new Action(this.OnEnterStopState),
-            UpdateStateEvent = new Action(this.UpdateStopState)
-        };
-        this.State.PowerOn = new State
-        {
-            OnEnterEvent = new Action(this.OnEnterPowerOnState),
-            UpdateStateEvent = new Action(this.UpdatePowerOnState)
-        };
-        this.Logic.RegisterStates(new IState[]
-        {
-            this.State.Stop,
-            this.State.PowerOn,
-        });
-        this.Logic.ChangeState(this.State.Stop);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         //Debug.Log(ReflectionTools.GetCurrentStateName(this.Logic, this.State, "CurrentState"));
 
-        //忽略输入响应
-        if (IgnoreInput)
-            return;
-
-        this.Logic.UpdateState(Time.deltaTime);
+        base.Update();
 
         if (this.Logic.CurrentState != this.State.Stop)
         {
@@ -73,12 +27,12 @@ public class SimulatorController : MonoBehaviour
         }
     }
 
-    private void OnEnterStopState()
+    protected override void OnEnterStopState()
     {
         OffPressed();
     }
 
-    private void UpdateStopState()
+    protected override void UpdateStopState()
     {
         //电源
         if (ComPortManager.Instance.dataFromSimulator.ComInput.Power)
@@ -88,12 +42,12 @@ public class SimulatorController : MonoBehaviour
         }
     }
 
-    private void OnEnterPowerOnState()
+    protected override void OnEnterPowerOnState()
     {
 
     }
 
-    private void UpdatePowerOnState()
+    protected override void UpdatePowerOnState()
     {
         if (ComPortManager.Instance.dataFromSimulator.ComInput.Fire)
         {
@@ -126,10 +80,6 @@ public class SimulatorController : MonoBehaviour
     private void ClutchInput()
     {
         vpStandardInput.externalClutch = ComPortManager.Instance.dataFromSimulator.ComInput.Clutch;
-        /*if (ComPortManager.Instance.dataFromSimulator.ComInput.Clutch > 0.1f)
-            SimulateKeyboard.KeyPress(KeyCode.LeftControl);
-        else
-            SimulateKeyboard.KeyUp(KeyCode.LeftControl);*/
     }
 
     /// <summary>
@@ -138,10 +88,6 @@ public class SimulatorController : MonoBehaviour
     private void AcceleratorInput()
     {
         vpStandardInput.externalThrottle = (ComPortManager.Instance.dataFromSimulator.ComInput.Accelerator + 88f) / 177f;
-        /*if (ComPortManager.Instance.dataFromSimulator.ComInput.Accelerator > 10f)
-            SimulateKeyboard.KeyPress(KeyCode.W);
-        else
-            SimulateKeyboard.KeyUp(KeyCode.W);*/
     }
 
     /// <summary>
@@ -150,10 +96,6 @@ public class SimulatorController : MonoBehaviour
     private void BrakeInput()
     {
         vpStandardInput.externalBrake = -ComPortManager.Instance.dataFromSimulator.ComInput.Brake;
-        /*if (ComPortManager.Instance.dataFromSimulator.ComInput.Brake < -0.1f)
-            SimulateKeyboard.KeyPress(KeyCode.S);
-        else
-            SimulateKeyboard.KeyUp(KeyCode.S);*/
     }
 
     /// <summary>
@@ -162,21 +104,6 @@ public class SimulatorController : MonoBehaviour
     private void DirectionInput()
     {
         vpStandardInput.externalSteer = -(ComPortManager.Instance.dataFromSimulator.ComInput.SteeringWheel - 0.02f) / 0.87f;
-        /*if (ComPortManager.Instance.dataFromSimulator.ComInput.SteeringWheel > 0.01f)
-        {
-            SimulateKeyboard.KeyUp(KeyCode.D);
-            SimulateKeyboard.KeyPress(KeyCode.A);
-        }
-        else if (ComPortManager.Instance.dataFromSimulator.ComInput.SteeringWheel < -0.01f)
-        {
-            SimulateKeyboard.KeyUp(KeyCode.A);
-            SimulateKeyboard.KeyPress(KeyCode.D);
-        }
-        else
-        {
-            SimulateKeyboard.KeyUp(KeyCode.A);
-            SimulateKeyboard.KeyUp(KeyCode.D);
-        }*/
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public enum SimulatorDataType
 {
     Udp,
     Com,
-    KeyCode,
+    Joystick,
     Bluetooth
 }
 
@@ -428,6 +428,83 @@ public class DataFromSimulator
         if (x < min) x = min;
         if (x > max) x = max;
         return x;
+    }
+    #endregion
+
+    #region Joystick模拟器
+    [Serializable]
+    public struct JoystickInputData
+    {
+        public bool Power;
+        public bool LeftTurnLight;
+        public bool RightTurnLight;
+        public bool LowBeam; //近光灯
+        public bool HighLowTransform; //交换远近灯(超车时打的灯)
+        public bool SeatBelt;
+        public bool HighBeam; //远光灯
+        public bool Fire;
+        public bool Gear1;
+        public bool Gear2;
+        public bool Gear3;
+        public bool Gear4;
+        public bool Gear5;
+        public bool GearR;
+        public int Gear
+        {
+            get
+            {
+                if (Gear1) return 1;
+                if (Gear2) return 2;
+                if (Gear3) return 3;
+                if (Gear4) return 4;
+                if (Gear5) return 5;
+                if (GearR) return 6;
+                return 0;
+            }
+        }
+        public bool HandBrake;
+        public bool EmergencyLight; //双闪应急灯
+        public bool Wiper; //雨刮
+
+        public float SteerAxis;
+        public float ThrottleAxis;
+        public float BrakeAxis;
+        public float ClutchAxis;
+    }
+
+    public JoystickInputData JoystickInput;
+
+    public readonly string SteerAxisName = "Steer";
+    public readonly string ThrottleAxisName = "Throttle";
+    public readonly string BrakeAxisName = "Brake";
+    public readonly string ClutchAxisName = "Clutch";
+
+    public void GetJoystickInput()
+    {
+        //手柄按键
+        JoystickInput.Power = Input.GetKey(KeyCode.Joystick1Button0) ? true : false;
+        JoystickInput.LeftTurnLight = Input.GetKey(KeyCode.Joystick1Button1) ? true : false;
+        JoystickInput.RightTurnLight = Input.GetKey(KeyCode.Joystick1Button2) ? true : false;
+        JoystickInput.LowBeam = Input.GetKey(KeyCode.Joystick1Button3) ? true : false;
+        JoystickInput.HighLowTransform = Input.GetKeyDown(KeyCode.Joystick1Button4) ? true : false;
+        JoystickInput.SeatBelt = Input.GetKey(KeyCode.Joystick1Button5) ? true : false;
+        JoystickInput.HighBeam = Input.GetKey(KeyCode.Joystick1Button6) ? true : false;
+        JoystickInput.Fire = Input.GetKey(KeyCode.Joystick1Button7) ? true : false;
+        JoystickInput.Gear1 = Input.GetKey(KeyCode.Joystick1Button8) ? true : false;
+        JoystickInput.Gear2 = Input.GetKey(KeyCode.Joystick1Button9) ? true : false;
+        JoystickInput.Gear3 = Input.GetKey(KeyCode.Joystick1Button10) ? true : false;
+        JoystickInput.Gear4 = Input.GetKey(KeyCode.Joystick1Button11) ? true : false;
+        JoystickInput.Gear5 = Input.GetKey(KeyCode.Joystick1Button12) ? true : false;
+        JoystickInput.GearR = Input.GetKey(KeyCode.Joystick1Button13) ? true : false;
+        JoystickInput.HandBrake = Input.GetKey(KeyCode.Joystick1Button14) ? true : false;
+        JoystickInput.EmergencyLight = Input.GetKey(KeyCode.Joystick1Button15) ? true : false;
+        JoystickInput.Wiper = Input.GetKey(KeyCode.Joystick1Button17) ? true : false;
+
+        //手柄摇杆
+        JoystickInput.SteerAxis = Input.GetAxis(SteerAxisName);
+        JoystickInput.ThrottleAxis = Input.GetAxis(ThrottleAxisName) < 0 ? Mathf.Abs(Input.GetAxis(ThrottleAxisName)) : 0;
+        JoystickInput.BrakeAxis = Input.GetAxis(BrakeAxisName) > 0 ? Input.GetAxis(BrakeAxisName) : 0;
+        JoystickInput.ClutchAxis = Input.GetAxis(ClutchAxisName);
     }
     #endregion
 }

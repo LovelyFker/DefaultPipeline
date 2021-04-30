@@ -5,16 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Scenes/MainMenu.unity
     guid: dd81128fdaa5c2a4fae7fff3ba60c904
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Scenes/GeneratePath.unity
     guid: e66c9eeff95981243a8916925ebe5709
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Scenes/Sport Coupe Demo.unity
     guid: 172336a9887469843b4a8fdc1943bdd3
-  - enabled: 1
-    path: Assets/_Scenes/KeyCodeReceiveTest.unity
-    guid: 11c774f15d1a4464a9c386510d25ccea
   m_configObjects: {}
