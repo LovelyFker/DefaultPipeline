@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class CacheManager : MonoBehaviour
+public class EncryptedCacheManager : MonoBehaviour
 {
     //8位密钥
     string key = "FFXXSSDD";
 
-    //缓存目录
-    public string CachePath
+    //本地应用数据加密缓存目录
+    public string EncryptedCachePath
     {
         get
         {
@@ -27,15 +27,15 @@ public class CacheManager : MonoBehaviour
         }
     }
 
-    private static CacheManager mInstance;
-    public static CacheManager Instance
+    private static EncryptedCacheManager mInstance;
+    public static EncryptedCacheManager Instance
     {
         get
         {
             if (mInstance == null)
             {
-                GameObject root = new GameObject("_CacheManager");
-                mInstance = root.AddComponent<CacheManager>();
+                GameObject root = new GameObject("_EncryptedCacheManager");
+                mInstance = root.AddComponent<EncryptedCacheManager>();
             }
             return mInstance;
         }
@@ -47,10 +47,10 @@ public class CacheManager : MonoBehaviour
         string encrypt_data = Des.Encrypt(test, key);
         Debug.Log(encrypt_data);
 
-        if (!Directory.Exists(CachePath))
-            Directory.CreateDirectory(CachePath);
+        if (!Directory.Exists(EncryptedCachePath))
+            Directory.CreateDirectory(EncryptedCachePath);
 
-        File.WriteAllBytes(CachePath + "学员id39", System.Text.Encoding.UTF8.GetBytes(encrypt_data));
+        File.WriteAllBytes(EncryptedCachePath + "学员id39", System.Text.Encoding.UTF8.GetBytes(encrypt_data));
 
         string decrypt_data = Des.Decrypt(encrypt_data, key);
         Debug.Log(decrypt_data);
