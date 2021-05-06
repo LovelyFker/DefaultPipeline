@@ -12,7 +12,9 @@ public enum SimulatorDataType
     Udp,
     Com,
     Joystick,
-    Bluetooth
+    Bluetooth,
+    Android_Com,
+    Android_Joystick
 }
 
 [Serializable]

@@ -50,12 +50,19 @@ public class ComPortManager : MonoBehaviour
 
     public void Init()
     {
-        //初始化打开串口
-        OpenPort();
-        dataReceiveThread = new Thread(new ThreadStart(DataReceiveFunction));
-        dataReceiveThread.Start();
-        //dataSendThread = new Thread(new ThreadStart(DataSendFunction));
-        //dataSendThread.Start();
+        if (ApplicationManager.Instance.mDataType == SimulatorDataType.Android_Com)
+        {
+
+        }
+        else if (ApplicationManager.Instance.mDataType == SimulatorDataType.Com)
+        {
+            //初始化打开串口
+            OpenPort();
+            dataReceiveThread = new Thread(new ThreadStart(DataReceiveFunction));
+            dataReceiveThread.Start();
+            //dataSendThread = new Thread(new ThreadStart(DataSendFunction));
+            //dataSendThread.Start();
+        }
     }
 
     #region 创建串口，并打开串口
@@ -115,6 +122,15 @@ public class ComPortManager : MonoBehaviour
             str = new string(strchar);
         }
         Debug.Log(str);
+    }
+
+    /// <summary>
+    /// 接收Android盒子的串口信息
+    /// </summary>
+    /// <param name="data"></param>
+    public void DataReceiveFromAndroid(string data)
+    {
+        dataFromSimulator.ComDataParsing(Encoding.Default.GetBytes(data));
     }
 
     #region 接收数据

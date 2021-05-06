@@ -43,7 +43,7 @@ public class ApplicationManager : MonoBehaviour
             PlayerPrefs.SetInt(GameSettings.DataType, (int)SimulatorDataType.Com);
 
         //测试
-        mDataType = SimulatorDataType.Joystick;
+        //mDataType = SimulatorDataType.Joystick;
 
         switch(mDataType)
         {
@@ -52,14 +52,21 @@ public class ApplicationManager : MonoBehaviour
                 mControllers.Where(i => i.GetType() == typeof(ComPortController)).FirstOrDefault().enabled = true;
                 break;
             case SimulatorDataType.Bluetooth:
-                Debug.Log("蓝牙传输");
+                Debug.Log("蓝牙传输.");
                 break;
             case SimulatorDataType.Joystick:
                 JoystickManager.Instance.Init();
                 mControllers.Where(i => i.GetType() == typeof(JoystickController)).FirstOrDefault().enabled = true;
                 break;
             case SimulatorDataType.Udp:
-                Debug.Log("SocketUdp协议");
+                Debug.Log("SocketUdp协议.");
+                break;
+            case SimulatorDataType.Android_Com:
+                ComPortManager.Instance.Init();
+                mControllers.Where(i => i.GetType() == typeof(ComPortController)).FirstOrDefault().enabled = true;
+                break;
+            case SimulatorDataType.Android_Joystick:
+                Debug.Log("Android手柄.");
                 break;
             default:
                 Debug.Log("Default");
