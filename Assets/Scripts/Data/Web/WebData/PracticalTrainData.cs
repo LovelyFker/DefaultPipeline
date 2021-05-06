@@ -57,7 +57,7 @@ public class PracticalTrainData : WebDataBase
         public long TrainEndTicks { get; set; }
     }
 
-    public PracticalTrainStruct data;
+    public PracticalTrainStruct data = new PracticalTrainStruct();
 
     public PracticalTrainData (string url, string referer) : base(url, referer)
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class DownloadCacheManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class DownloadCacheManager : MonoBehaviour
             return mInstance;
         }
     }
+
+    private Thread mThread;
 
     //下载资源缓存目录
     public string DownloadCachePath
@@ -79,5 +82,34 @@ public class DownloadCacheManager : MonoBehaviour
         {
             return DownloadCachePath + "/Text/";
         }
+    }
+
+    /// <summary>
+    /// 下载缓存网络资源
+    /// </summary>
+    public void DownLoad(string url, string fileType, string path)
+    {
+        if (mThread.IsAlive)
+        {
+            Debug.LogError("下载线程工作中！");
+            return;
+        }
+
+        mThread.Abort();    
+        mThread = new Thread(() => HttpRequest.DownLoad(url, fileType, path));
+        HttpRequest.onDownLoadCompleted += () => { mThread.Abort(); };
+        mThread.Start();
+    }
+
+    private void OnDestroy()
+    {
+        if (mThread != null)
+            mThread.Abort();
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (mThread != null)
+            mThread.Abort();
     }
 }

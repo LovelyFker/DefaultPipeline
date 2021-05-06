@@ -37,7 +37,7 @@ public class TrainInfoData : WebDataBase
         public string TrainData { get; set; }
     }
 
-    public TrainInfoStruct data;
+    public TrainInfoStruct data = new TrainInfoStruct();
 
     public TrainInfoData(string url, string referer) : base(url, referer)
     {

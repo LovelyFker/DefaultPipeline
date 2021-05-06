@@ -61,7 +61,7 @@ public class SimulatedTestData : WebDataBase
         public int Deduct { get; set; }
     }
 
-    public SimulatedStruct data;
+    public SimulatedStruct data = new SimulatedStruct();
 
     public SimulatedTestData (string url, string referer) : base(url, referer)
     {

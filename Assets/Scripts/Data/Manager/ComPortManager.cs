@@ -52,7 +52,7 @@ public class ComPortManager : MonoBehaviour
     {
         if (ApplicationManager.Instance.mDataType == SimulatorDataType.Android_Com)
         {
-
+            Debug.Log("从安卓盒子接收信息！");
         }
         else if (ApplicationManager.Instance.mDataType == SimulatorDataType.Com)
         {

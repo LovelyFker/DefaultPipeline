@@ -37,7 +37,7 @@ public class StartParameterData : WebDataBase
         public string Reserved { get; set; }
     }
 
-    public StartParameterStruct data;
+    public StartParameterStruct data = new StartParameterStruct();
 
     public StartParameterData(string url) : base(url)
     {
