@@ -41,6 +41,6 @@ public class StartParameterData : WebDataBase
 
     public StartParameterData(string url) : base(url)
     {
-        Httpurl = url;
+        Url = url;
     }
 }

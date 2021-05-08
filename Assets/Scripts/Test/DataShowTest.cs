@@ -38,7 +38,7 @@ public class DataShowTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ApplicationManager.Instance.mDataType != SimulatorDataType.Com)
+        if (!(ApplicationManager.Instance.mDataType == SimulatorDataType.Com || ApplicationManager.Instance.mDataType == SimulatorDataType.Android_Com))
             return;
 
         comInputData = ComPortManager.Instance.dataFromSimulator.ComInput;

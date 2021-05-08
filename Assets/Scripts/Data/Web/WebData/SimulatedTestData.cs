@@ -65,7 +65,7 @@ public class SimulatedTestData : WebDataBase
 
     public SimulatedTestData (string url, string referer) : base(url, referer)
     {
-        Httpurl = url;
+        Url = url;
         HttpReferer = referer;
     }
 }

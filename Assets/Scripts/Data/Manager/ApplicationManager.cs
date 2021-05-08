@@ -43,9 +43,12 @@ public class ApplicationManager : MonoBehaviour
             PlayerPrefs.SetInt(GameSettings.DataType, (int)SimulatorDataType.Com);
 
         //测试
-        //mDataType = SimulatorDataType.Joystick;
+        mDataType = SimulatorDataType.Joystick;
 
-        switch(mDataType)
+        WebDataManager.StartParameterData.data.Serial = "12980";
+        //DownloadCacheManager.Instance.DownLoad("http://www.unity3d.com/webplayers/Movie/sample.ogg", "ogg", DownloadCacheManager.Instance.VideoCachePath);
+
+        switch (mDataType)
         {
             case SimulatorDataType.Com:
                 ComPortManager.Instance.Init();

@@ -61,7 +61,7 @@ public class PracticalTrainData : WebDataBase
 
     public PracticalTrainData (string url, string referer) : base(url, referer)
     {
-        Httpurl = url;
+        Url = url;
         HttpReferer = referer;
     }
 }

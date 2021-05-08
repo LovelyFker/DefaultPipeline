@@ -11,6 +11,8 @@ public class HttpRequest
 {
     public static float downLoadPercentage;
     public static Action onDownLoadCompleted;
+    public static Action onGetCompleted;
+    public static Action onPostCompleted;
 
     /// <summary>
     /// Get请求
@@ -42,6 +44,9 @@ public class HttpRequest
         {
             request.Abort();
         }
+
+        onGetCompleted?.Invoke();
+        onGetCompleted.GetInvocationList().ToList().Clear();
 
         return retString;
     }
@@ -128,6 +133,10 @@ public class HttpRequest
         {
             request.Abort();
         }
+
+        onPostCompleted?.Invoke();
+        onPostCompleted.GetInvocationList().ToList().Clear();
+
         return retString;
     }
 
@@ -147,7 +156,7 @@ public class HttpRequest
         {
             request = (HttpWebRequest)WebRequest.Create(url);
             //超时设置
-            request.Timeout = 100;
+            request.Timeout = 500;
             response = (HttpWebResponse)request.GetResponse();
         }
         catch (Exception e)

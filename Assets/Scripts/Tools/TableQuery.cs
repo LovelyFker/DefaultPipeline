@@ -10,7 +10,7 @@ namespace Table
 {
     public static class TableQuery
     {
-        static string JsonPath = Application.dataPath + "/Resources/Json/";
+        static string JsonPath = "Assets/Resources/Json/";
 
         /// <summary>
         /// 根据Index序号查询某条Json数据

@@ -4,20 +4,21 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Reflection;
 using System;
+using System.IO;
 
 [Serializable]
 public class WebDataBase
 {
-    private string Url;
-    public string Httpurl
+    private string url;
+    public string Url
     {
         get
         {
-            return Url;
+            return url;
         }
         set
         {
-            Url = value;
+            url = value;
         }
     }
 
@@ -36,12 +37,12 @@ public class WebDataBase
 
     public WebDataBase(string url)
     {
-        Httpurl = url;
+        Url = url;
     }
 
     public WebDataBase(string url, string referer)
     {
-        Httpurl = url;
+        Url = url;
         HttpReferer = referer;
     }
 
@@ -53,13 +54,28 @@ public class WebDataBase
         try
         {
             //FIXED: 考虑是否多线程处理收发数据
-            data = JsonConvert.DeserializeObject<T>(HttpRequest.Get(Httpurl));
+            data = JsonConvert.DeserializeObject<T>(HttpRequest.Get(Url));
         }
         catch (Exception e)
         {
             Debug.Log(e);
         }
     }
+
+    //本地解析Json测试
+    public void JsonToStructLocal<T> (ref T data)
+    {
+        try
+        {
+            string jsonString = File.ReadAllText(Url);
+            data = JsonConvert.DeserializeObject<T>(jsonString);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
 
     //本地Struct转Json字符串
     public void StructToJson<T> (T data)
@@ -82,7 +98,7 @@ public class WebDataBase
             try
             {
                 //FIXED: 考虑是否多线程处理收发数据
-                HttpRequest.Post(Httpurl, StringData, HttpReferer);
+                HttpRequest.Post(Url, StringData, HttpReferer);
             }
             catch (Exception e)
             {

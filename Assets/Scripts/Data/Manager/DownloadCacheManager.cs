@@ -34,7 +34,7 @@ public class DownloadCacheManager : MonoBehaviour
 #elif UNITY_ANDROID
             path = Application.persistentDataPath + "/DownloadCaches/"; //路径：/data/data/xxx.xxx.xxx/files/DownloadCaches/
 #else
-            path = Application.dataPath + "/DownloadCaches/"; //路径：/Assets/DownloadCaches/
+            path = Application.dataPath + "/DownloadCaches/"; //路径：/xxxxx_data/DownloadCaches/
 #endif
             return path;
         }
@@ -85,17 +85,27 @@ public class DownloadCacheManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Json缓存
+    /// </summary>
+    public string JsonCachePath
+    {
+        get
+        {
+            return DownloadCachePath + "/Json/";
+        }
+    }
+
+    /// <summary>
     /// 下载缓存网络资源
     /// </summary>
     public void DownLoad(string url, string fileType, string path)
     {
-        if (mThread.IsAlive)
+        if (mThread != null && mThread.IsAlive)
         {
             Debug.LogError("下载线程工作中！");
             return;
         }
 
-        mThread.Abort();    
         mThread = new Thread(() => HttpRequest.DownLoad(url, fileType, path));
         HttpRequest.onDownLoadCompleted += () => { mThread.Abort(); };
         mThread.Start();

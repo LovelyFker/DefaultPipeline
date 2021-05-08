@@ -41,7 +41,7 @@ public class TrainInfoData : WebDataBase
 
     public TrainInfoData(string url, string referer) : base(url, referer)
     {
-        Httpurl = url;
+        Url = url;
         HttpReferer = referer;
     }
 }

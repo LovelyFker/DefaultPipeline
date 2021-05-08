@@ -97,6 +97,9 @@ public class ComPortManager : MonoBehaviour
 
     public void ClosePort()
     {
+        if (sp == null)
+            return;
+
         try
         {
             sp.Close();
