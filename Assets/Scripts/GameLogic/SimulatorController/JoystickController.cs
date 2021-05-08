@@ -20,7 +20,7 @@ public class JoystickController : SimulatorControllerBase
 
         if (this.Logic.CurrentState != this.State.Stop)
         {
-            if (!JoystickManager.Instance.dataFromSimulator.JoystickInput.Power)
+            if (!JoystickManager.Instance.dataFromSimulator.SimulatorInput.Power)
                 this.Logic.ChangeState(this.State.Stop);
         }
     }
@@ -33,7 +33,7 @@ public class JoystickController : SimulatorControllerBase
     protected override void UpdateStopState()
     {
         //电源
-        if (JoystickManager.Instance.dataFromSimulator.JoystickInput.Power)
+        if (JoystickManager.Instance.dataFromSimulator.SimulatorInput.Power)
         {
             AccOnPressed();
             this.Logic.ChangeState(this.State.PowerOn);
@@ -47,7 +47,7 @@ public class JoystickController : SimulatorControllerBase
 
     protected override void UpdatePowerOnState()
     {
-        if (JoystickManager.Instance.dataFromSimulator.JoystickInput.Fire)
+        if (JoystickManager.Instance.dataFromSimulator.SimulatorInput.Fire)
         {
             StartPressed();
         }
@@ -61,11 +61,11 @@ public class JoystickController : SimulatorControllerBase
 
     private void GetInputs()
     {
-        vpStandardInput.externalHandbrake = JoystickManager.Instance.dataFromSimulator.JoystickInput.HandBrake ? 1 : 0;
-        vpStandardInput.externalClutch = JoystickManager.Instance.dataFromSimulator.JoystickInput.ClutchAxis;
-        vpStandardInput.externalThrottle = JoystickManager.Instance.dataFromSimulator.JoystickInput.ThrottleAxis;
-        vpStandardInput.externalBrake = JoystickManager.Instance.dataFromSimulator.JoystickInput.BrakeAxis;
-        vpStandardInput.externalSteer = JoystickManager.Instance.dataFromSimulator.JoystickInput.SteerAxis;
+        vpStandardInput.externalHandbrake = JoystickManager.Instance.dataFromSimulator.SimulatorInput.HandBrake ? 1 : 0;
+        vpStandardInput.externalClutch = JoystickManager.Instance.dataFromSimulator.SimulatorInput.ClutchAxis;
+        vpStandardInput.externalThrottle = JoystickManager.Instance.dataFromSimulator.SimulatorInput.ThrottleAxis;
+        vpStandardInput.externalBrake = JoystickManager.Instance.dataFromSimulator.SimulatorInput.BrakeAxis;
+        vpStandardInput.externalSteer = JoystickManager.Instance.dataFromSimulator.SimulatorInput.SteerAxis;
         GearInput();
     }
 
@@ -74,7 +74,7 @@ public class JoystickController : SimulatorControllerBase
     /// </summary>
     private void GearInput()
     {
-        switch (JoystickManager.Instance.dataFromSimulator.JoystickInput.Gear)
+        switch (JoystickManager.Instance.dataFromSimulator.SimulatorInput.Gear)
         {
             case 0:
                 SimulateKeyboard.KeyDown(KeyCode.N);

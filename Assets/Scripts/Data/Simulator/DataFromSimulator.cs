@@ -20,7 +20,7 @@ public enum SimulatorDataType
 [Serializable]
 public class DataFromSimulator
 {
-    #region 串口模拟器
+    #region 当前串口模拟器
     [Serializable]
     public struct ComInputData
     {
@@ -433,9 +433,9 @@ public class DataFromSimulator
     }
     #endregion
 
-    #region Joystick模拟器
+    #region 通用模拟器数据接收
     [Serializable]
-    public struct JoystickInputData
+    public struct SimulatorInputData
     {
         public bool Power;
         public bool LeftTurnLight;
@@ -474,39 +474,68 @@ public class DataFromSimulator
         public float ClutchAxis;
     }
 
-    public JoystickInputData JoystickInput;
+    public SimulatorInputData SimulatorInput;
 
     public readonly string SteerAxisName = "Steer";
     public readonly string ThrottleAxisName = "Throttle";
     public readonly string BrakeAxisName = "Brake";
     public readonly string ClutchAxisName = "Clutch";
 
+    /// <summary>
+    /// 获取手柄键值
+    /// </summary>
     public void GetJoystickInput()
     {
         //手柄按键
-        JoystickInput.Power = Input.GetKey(KeyCode.Joystick1Button0) ? true : false;
-        JoystickInput.LeftTurnLight = Input.GetKey(KeyCode.Joystick1Button1) ? true : false;
-        JoystickInput.RightTurnLight = Input.GetKey(KeyCode.Joystick1Button2) ? true : false;
-        JoystickInput.LowBeam = Input.GetKey(KeyCode.Joystick1Button3) ? true : false;
-        JoystickInput.HighLowTransform = Input.GetKeyDown(KeyCode.Joystick1Button4) ? true : false;
-        JoystickInput.SeatBelt = Input.GetKey(KeyCode.Joystick1Button5) ? true : false;
-        JoystickInput.HighBeam = Input.GetKey(KeyCode.Joystick1Button6) ? true : false;
-        JoystickInput.Fire = Input.GetKey(KeyCode.Joystick1Button7) ? true : false;
-        JoystickInput.Gear1 = Input.GetKey(KeyCode.Joystick1Button8) ? true : false;
-        JoystickInput.Gear2 = Input.GetKey(KeyCode.Joystick1Button9) ? true : false;
-        JoystickInput.Gear3 = Input.GetKey(KeyCode.Joystick1Button10) ? true : false;
-        JoystickInput.Gear4 = Input.GetKey(KeyCode.Joystick1Button11) ? true : false;
-        JoystickInput.Gear5 = Input.GetKey(KeyCode.Joystick1Button12) ? true : false;
-        JoystickInput.GearR = Input.GetKey(KeyCode.Joystick1Button13) ? true : false;
-        JoystickInput.HandBrake = Input.GetKey(KeyCode.Joystick1Button14) ? true : false;
-        JoystickInput.EmergencyLight = Input.GetKey(KeyCode.Joystick1Button15) ? true : false;
-        JoystickInput.Wiper = Input.GetKey(KeyCode.Joystick1Button17) ? true : false;
+        SimulatorInput.Power = Input.GetKey(KeyCode.Joystick1Button0) ? true : false;
+        SimulatorInput.LeftTurnLight = Input.GetKey(KeyCode.Joystick1Button1) ? true : false;
+        SimulatorInput.RightTurnLight = Input.GetKey(KeyCode.Joystick1Button2) ? true : false;
+        SimulatorInput.LowBeam = Input.GetKey(KeyCode.Joystick1Button3) ? true : false;
+        SimulatorInput.HighLowTransform = Input.GetKeyDown(KeyCode.Joystick1Button4) ? true : false;
+        SimulatorInput.SeatBelt = Input.GetKey(KeyCode.Joystick1Button5) ? true : false;
+        SimulatorInput.HighBeam = Input.GetKey(KeyCode.Joystick1Button6) ? true : false;
+        SimulatorInput.Fire = Input.GetKey(KeyCode.Joystick1Button7) ? true : false;
+        SimulatorInput.Gear1 = Input.GetKey(KeyCode.Joystick1Button8) ? true : false;
+        SimulatorInput.Gear2 = Input.GetKey(KeyCode.Joystick1Button9) ? true : false;
+        SimulatorInput.Gear3 = Input.GetKey(KeyCode.Joystick1Button10) ? true : false;
+        SimulatorInput.Gear4 = Input.GetKey(KeyCode.Joystick1Button11) ? true : false;
+        SimulatorInput.Gear5 = Input.GetKey(KeyCode.Joystick1Button12) ? true : false;
+        SimulatorInput.GearR = Input.GetKey(KeyCode.Joystick1Button13) ? true : false;
+        SimulatorInput.HandBrake = Input.GetKey(KeyCode.Joystick1Button14) ? true : false;
+        SimulatorInput.EmergencyLight = Input.GetKey(KeyCode.Joystick1Button15) ? true : false;
+        SimulatorInput.Wiper = Input.GetKey(KeyCode.Joystick1Button17) ? true : false;
 
         //手柄摇杆
-        JoystickInput.SteerAxis = Input.GetAxis(SteerAxisName);
-        JoystickInput.ThrottleAxis = Input.GetAxis(ThrottleAxisName) < 0 ? Mathf.Abs(Input.GetAxis(ThrottleAxisName)) : 0;
-        JoystickInput.BrakeAxis = Input.GetAxis(BrakeAxisName) > 0 ? Input.GetAxis(BrakeAxisName) : 0;
-        JoystickInput.ClutchAxis = Input.GetAxis(ClutchAxisName);
+        SimulatorInput.SteerAxis = Input.GetAxis(SteerAxisName);
+        SimulatorInput.ThrottleAxis = Input.GetAxis(ThrottleAxisName) < 0 ? Mathf.Abs(Input.GetAxis(ThrottleAxisName)) : 0;
+        SimulatorInput.BrakeAxis = Input.GetAxis(BrakeAxisName) > 0 ? Input.GetAxis(BrakeAxisName) : 0;
+        SimulatorInput.ClutchAxis = Input.GetAxis(ClutchAxisName);
+    }
+    
+
+    /// <summary>
+    /// 获取串口数据
+    /// </summary>
+    public void GetComInputData(SerialPort sp, byte[] data)
+    {
+        int sum = sp.BytesToRead;
+        try
+        {
+            sp.Read(data, 0, sum);
+            ComInputDataParsing(data);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+    }
+
+    /// <summary>
+    /// 解析串口数据
+    /// </summary>
+    private void ComInputDataParsing(byte[] data)
+    {
+
     }
     #endregion
 }
