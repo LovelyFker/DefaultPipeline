@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Sport Coupe Demo.unity
     guid: 172336a9887469843b4a8fdc1943bdd3
+<<<<<<< Updated upstream
+=======
+  - enabled: 1
+    path: Assets/_Scenes/KeyCodeReceiveTest.unity
+    guid: 11c774f15d1a4464a9c386510d25ccea
+  - enabled: 1
+    path: Assets/_Scenes/ccc.unity
+    guid: 7f63de36bc7535149974d30030741ef7
+>>>>>>> Stashed changes
   m_configObjects: {}
