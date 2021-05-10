@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4788379, g: 0.51385754, b: 0.6072147, a: 1}
+  m_IndirectSpecularColor: {r: 0.47835088, g: 0.51342446, b: 0.6068943, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7802,16 +7802,14 @@ MonoBehaviour:
   PathCellPrefabs:
   - {fileID: 954196424724582498, guid: 414ea969c76580c4b8a19d89d7dd202e, type: 3}
   - {fileID: 8416762773487121088, guid: eb45432470e97454792b74894f4e4020, type: 3}
-  PathOrigin:
-  - {fileID: 1602194779887015374, guid: 7cb70ee0910acb0479868a2cf8585652, type: 3}
-  - {fileID: 954196424724582498, guid: 414ea969c76580c4b8a19d89d7dd202e, type: 3}
-  - {fileID: 954196424724582498, guid: 414ea969c76580c4b8a19d89d7dd202e, type: 3}
-  - {fileID: 954196424724582498, guid: 414ea969c76580c4b8a19d89d7dd202e, type: 3}
+  PathStartingPoint: {fileID: 1602194779887015374, guid: 7cb70ee0910acb0479868a2cf8585652,
+    type: 3}
   PathDestination: {fileID: 1330864026590715308, guid: 71ceb273c3fba7a45b9581265ca7766f,
     type: 3}
-  PathQueue: []
   ReservePathCount: 20
   DestinationPathCount: 39
+  CountBetweenCurAndLast: 5
+  WrongDirectionPathCount: 6
 --- !u!1 &1501401850
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using Random = UnityEngine.Random;
 
 public class PathGenerator : MonoBehaviour
 {
@@ -22,17 +23,22 @@ public class PathGenerator : MonoBehaviour
 
     public Transform PathRoot;
     public List<GameObject> PathCellPrefabs;
-    public List<GameObject> PathOrigin;
+    public GameObject PathStartingPoint;
     public GameObject PathDestination;
-    public List<GameObject> PathQueue;
     
     public Dictionary<GameObject, int> PathDic = new Dictionary<GameObject, int>();
+    //放置错误方向的pathObj
+    public Dictionary<int, GameObject> WrontPathDic = new Dictionary<int, GameObject>();
 
     //超过该数量从最初开始删除pathObj
     [Header("保留pathObj数量"), Range(20, 50)]
     public int ReservePathCount;
     [Header("终点pathObj序号"), Range(39, 46)]
     public int DestinationPathCount;
+    [Header("当前path与lastPath的间隔数"), Range(2, 15)]
+    public int CountBetweenCurAndLast;
+    [Header("错误方向的path生成数"), Range(5, 10)]
+    public int WrongDirectionPathCount;
 
     private string prefabsPath = "Prefabs/";
 
@@ -44,6 +50,8 @@ public class PathGenerator : MonoBehaviour
     private GameObject mCurrentPathObj;
     //记录当前末尾PathObj
     private GameObject mCurrentLastPathObj;
+    //记录当前路径地块的Y轴旋转量
+    private float mCurrentRotationY;
 
     private void Awake()
     {
@@ -54,28 +62,24 @@ public class PathGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < PathOrigin.Count; i++)
+        for (int i = 0; i < CountBetweenCurAndLast + 1; i++)
         {
-            GameObject pathObj;
             if (i == 0)
             {
-                pathObj = Instantiate(PathOrigin[i], Vector3.zero, Quaternion.identity, PathRoot);
-                PathQueue.Add(pathObj);
+                GameObject pathObj = Instantiate(PathStartingPoint, Vector3.zero, Quaternion.identity, PathRoot);
+                PathDic.Add(pathObj, i);
+                mCurrentLastPathIndex = 0;
+                mCurrentLastPathObj = pathObj;
             }
             else
             {
-                Vector3 Offset = PathOrigin[i].transform.position - PathOrigin[i].GetComponent<PathCell>().PathStartJoint.position;
-                pathObj = Instantiate(PathOrigin[i], PathQueue[i - 1].GetComponent<PathCell>().PathEndJoint.position + Offset, Quaternion.identity, PathRoot);
-                PathQueue.Add(pathObj);
+                GenerateRandomPath();
             }
-
-            PathDic.Add(pathObj, i);
         }
 
         mCurrentPathIndex = 0;
-        mCurrentLastPathIndex = PathQueue.Count - 1;
-        mCurrentPathObj = PathQueue[0];
-        mCurrentLastPathObj = PathQueue[PathQueue.Count - 1];
+        mCurrentPathObj = PathDic.FirstOrDefault().Key;
+        mCurrentRotationY = 0f;
     }
 
     // Update is called once per frame
@@ -118,31 +122,37 @@ public class PathGenerator : MonoBehaviour
     /// </summary>
     private void GenerateRandomPath()
     {
-        int randomIndex = UnityEngine.Random.Range(0, PathCellPrefabs.Count);
+        int randomIndex = Random.Range(0, PathCellPrefabs.Count);
 
         //判断是否该生成终点
         if (mCurrentLastPathIndex >= DestinationPathCount)
         {
             //判断是否已生成终点
             if (mCurrentLastPathObj.GetComponent<PathCell>().Type != PathCell.PathCellType.Destination)
-            {
-                Vector3 Offset = PathDestination.transform.position - PathDestination.GetComponent<PathCell>().PathStartJoint.position;
-                GameObject pathObj = Instantiate(PathDestination, mCurrentLastPathObj.GetComponent<PathCell>().PathEndJoint.position + Offset, Quaternion.identity, PathRoot);
-                mCurrentLastPathObj = pathObj;
-                mCurrentLastPathIndex++;
-                PathDic.Add(mCurrentLastPathObj, mCurrentLastPathIndex);
-            }
+                GeneratePath(PathDestination);
         }
         else
         {
-            if (mCurrentLastPathIndex - mCurrentPathIndex < 2)
-            {
-                Vector3 Offset = PathCellPrefabs[randomIndex].transform.position - PathCellPrefabs[randomIndex].GetComponent<PathCell>().PathStartJoint.position;
-                GameObject pathObj = Instantiate(PathCellPrefabs[randomIndex], mCurrentLastPathObj.GetComponent<PathCell>().PathEndJoint.position + Offset, Quaternion.identity, PathRoot);
-                mCurrentLastPathObj = pathObj;
-                mCurrentLastPathIndex++;
-                PathDic.Add(mCurrentLastPathObj, mCurrentLastPathIndex);
-            }
+            if (mCurrentLastPathIndex - mCurrentPathIndex < CountBetweenCurAndLast)
+                GeneratePath(PathCellPrefabs[randomIndex]);
         }
+    }
+
+    private void GeneratePath(GameObject path)
+    {
+        int start_random = Random.Range(0, path.GetComponent<PathCell>().PathStartJointList.Count);
+        int end_random = Random.Range(0, mCurrentLastPathObj.GetComponent<PathCell>().PathEndJointList.Count);
+
+        Vector3 Offset = path.transform.position - path.GetComponent<PathCell>().PathStartJointList[start_random].position;
+        GameObject pathObj = Instantiate(path, mCurrentLastPathObj.GetComponent<PathCell>().PathEndJointList[end_random].position + Offset, Quaternion.identity, PathRoot);
+        mCurrentLastPathObj = pathObj;
+        mCurrentLastPathIndex++;
+        PathDic.Add(mCurrentLastPathObj, mCurrentLastPathIndex);
+    }
+
+    //为错误的方向生成路径
+    private void GeneratePathForWrongDirection()
+    {
+        
     }
 }

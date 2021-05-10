@@ -519,8 +519,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  PathStartJoint: {fileID: 8416762775453432192}
-  PathEndJoint: {fileID: 8416762774994909302}
+  PathStartJointList:
+  - {fileID: 8416762775453432192}
+  PathEndJointList:
+  - {fileID: 8416762774994909302}
   Trigger: {fileID: 1392956604}
 --- !u!65 &1392956604
 BoxCollider:

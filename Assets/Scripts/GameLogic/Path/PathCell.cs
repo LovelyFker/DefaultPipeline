@@ -19,9 +19,9 @@ public class PathCell : MonoBehaviour
 
     public PathCellType Type;
     //起始连接点
-    public Transform PathStartJoint;
+    public List<Transform> PathStartJointList;
     //终止连接点
-    public Transform PathEndJoint;
+    public List<Transform> PathEndJointList;
 
     public Collider Trigger;
 
